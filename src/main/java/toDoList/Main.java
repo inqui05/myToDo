@@ -1,4 +1,4 @@
-package main.java.toDoList;
+package toDoList;
 
 /**
  * User: inqui05
