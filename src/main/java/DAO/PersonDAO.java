@@ -1,6 +1,7 @@
-package DAO;
+package main.java.DAO;
 
-import table.Person;
+import main.java.table.Person;
+import main.java.table.Task;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,10 +12,11 @@ import java.util.List;
 
 public interface PersonDAO {
 
-    public void addPerson(Person person) throws SQLException;
-    public void updatePerson(Person person) throws SQLException;
-    public void deletePerson(Person person) throws SQLException;
-    public Person getPerson(int id) throws SQLException;
-    public List<Person> getPeople() throws SQLException;
+    void addPerson(Person person) throws SQLException;
+    void updatePerson(Person person) throws SQLException;
+    void deletePerson(Person person) throws SQLException;
+    Person getPersonById(int id) throws SQLException;
+    List<Person> getAllPeople() throws SQLException;
+    Person getPersonByTask(Task task) throws SQLException;
 
 }

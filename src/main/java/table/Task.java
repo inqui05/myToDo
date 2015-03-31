@@ -1,4 +1,4 @@
-package table;
+package main.java.table;
 
 import javax.persistence.*;
 
