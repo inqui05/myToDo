@@ -11,17 +11,17 @@ import javax.persistence.*;
 public class Task {
 
     @Id
-    @Column(name = "task id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "task_id", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 1000, nullable = false)
     private String name;
 
-    @Column(name = "status")
+    @Column(name = "status", length = 100, nullable = false)
     private String status;
 
-    @Column(name = "person id")
+    @Column(name = "person_id", nullable = false)
     private int personId;
 
     public Task() {

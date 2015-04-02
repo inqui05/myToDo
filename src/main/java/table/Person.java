@@ -11,23 +11,23 @@ import javax.persistence.*;
 public class Person {
 
     @Id
-    @Column(name = "person id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "person_id", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "first name")
+    @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
 
-    @Column(name = "middle name")
+    @Column(name = "middle_name", length = 100, nullable = false)
     private String middleName;
 
-    @Column(name = "second name")
+    @Column(name = "second_name", length = 100, nullable = false)
     private String secondName;
 
-    @Column(name = "login")
+    @Column(name = "login", length = 30, nullable = true)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 30, nullable = true)
     private String password;
 
     public Person() {

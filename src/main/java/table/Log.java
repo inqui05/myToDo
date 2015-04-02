@@ -11,17 +11,17 @@ import javax.persistence.*;
 public class Log {
 
     @Id
-    @Column(name = "log id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "log_id", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "elapsed time")
+    @Column(name = "elapsed_time", nullable = true)
     private int time;
 
-    @Column(name = "comment")
+    @Column(name = "comment", length = 1000, nullable = false)
     private String comment;
 
-    @Column(name = "task id")
+    @Column(name = "task_id", nullable = false)
     private int taskId;
 
     public Log() {
