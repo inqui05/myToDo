@@ -1,6 +1,9 @@
 package main.java.table;
 
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Artsiom Tratsiuk on 31.03.2015.
@@ -12,23 +15,26 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "person_id", unique = true, nullable = false)
+    @Column(name = "person_id")
     private int id;
 
-    @Column(name = "first_name", length = 100, nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "middle_name", length = 100, nullable = false)
+    @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "second_name", length = 100, nullable = false)
+    @Column(name = "second_name")
     private String secondName;
 
-    @Column(name = "login", length = 30, nullable = true)
+    @Column
     private String login;
 
-    @Column(name = "password", length = 30, nullable = true)
+    @Column
     private String password;
+
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "person")
+    private Set<Task> tasks = new HashSet<Task>();
 
     public Person() {
     }
@@ -57,6 +63,10 @@ public class Person {
         this.password = password;
     }
 
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     public int getId() {
         return id;
     }
@@ -79,5 +89,9 @@ public class Person {
 
     public String getPassword() {
         return password;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
     }
 }

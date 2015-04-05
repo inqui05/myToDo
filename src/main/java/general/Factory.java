@@ -13,10 +13,10 @@ import main.java.DAO.TaskDAO;
 
 public class Factory {
 
-    public static Factory instance = new Factory();
-    public PersonDAO personDAO;
-    public LogDAO logDAO;
-    public TaskDAO taskDAO;
+    private static Factory instance = new Factory();
+    private PersonDAO personDAO;
+    private LogDAO logDAO;
+    private TaskDAO taskDAO;
 
     public Factory() {
     }

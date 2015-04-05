@@ -18,14 +18,15 @@ public class PersonDAOImpl implements PersonDAO {
     @Override
     public void addPerson(Person person) throws SQLException {
         Session session = null;
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(person);
             session.getTransaction().commit();
         }catch(Exception e){
             e.printStackTrace();
-        }finally {
+        }
+        finally {
             if (session != null && session.isOpen()) session.close();
         }
     }
@@ -46,7 +47,7 @@ public class PersonDAOImpl implements PersonDAO {
     }
 
     @Override
-    public void deletePerson(Person person) throws SQLException {
+    public final void deletePerson(Person person) throws SQLException {
         Session session = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
@@ -88,21 +89,5 @@ public class PersonDAOImpl implements PersonDAO {
             if (session != null && session.isOpen()) session.close();
         }
        return people;
-    }
-
-    @Override
-    public Person getPersonByTask(Task task) throws SQLException {
-        Person result = null;
-        int id = task.getPersonId();
-        Session session = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            result = (Person) session.load(Person.class, id);
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally {
-            if (session != null && session.isOpen()) session.close();
-        }
-        return result;
     }
 }

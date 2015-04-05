@@ -18,11 +18,12 @@ public class Log {
     @Column(name = "elapsed_time", nullable = true)
     private int time;
 
-    @Column(name = "comment", length = 1000, nullable = false)
+    @Column(length = 1000, nullable = false)
     private String comment;
 
-    @Column(name = "task_id", nullable = false)
-    private int taskId;
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "task_id")
+    private Task task;
 
     public Log() {
     }
@@ -39,8 +40,8 @@ public class Log {
         this.comment = comment;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public int getId() {
@@ -55,7 +56,7 @@ public class Log {
         return comment;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public Task getTask() {
+        return task;
     }
 }
