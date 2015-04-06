@@ -8,22 +8,24 @@
     <session-factory>
 
         <!-- Database connection settings -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/todo</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/test</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
-
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">1</property>
+        <!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+        <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
-        <property name="connection.release_mode">auto</property>
-        <property name="connection.autocommit">true</property>
-        <property name="com.intellij.javaee.persistence.datasource">value="name of your datasource"</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
 
-
-        <mapping class="main.java.table.Person"/>
-        <mapping class="main.java.table.Task"/>
-        <mapping class="main.java.table.Log"/>
+        <mapping resource="main/java/db/Person.hbm.xml"/>
+        <mapping resource="main/java/db/Task.hbm.xml"/>
+        <mapping resource="main/java/db/Log.hbm.xml"/>
 
     </session-factory>
 

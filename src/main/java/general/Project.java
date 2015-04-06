@@ -10,6 +10,7 @@ import main.java.util.HibernateUtil;
 
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,33 +28,41 @@ public class Project {
         TaskDAO taskDAO = factory.getTaskDAO();
         LogDAO logDAO = factory.getLogDAO();
 
-        Person person = new Person();
-        person.setFirstName("Artsiom");
-        person.setMiddleName("Nikolaevish");
+        //Person person = new Person();
+        /*person.setFirstName("Nadia");
+        person.setMiddleName("Nikolaevna");
         person.setSecondName("Tratsiuk");
-        person.setLogin("inqui05");
+        person.setLogin("loshara");
         person.setPassword("lol");
-        //Set<Task> tasks = new HashSet<Task>();
+        Set<Task> tasks = new HashSet<Task>();*/
 
         //Log log1 =  new Log();
-        //log1.setComment("РАБОТАЙ, А НЕ ЗАНИМАЙСЯ КУЙНЕЙ");
-        //log1.setTime(240);
-        //Set<Log> logs = new HashSet<Log>();
-        //logs.add(log1);
+        /*log1.setComment("SLEEP HARD PLAY HARD");
+        log1.setTime(19999999);
+        Set<Log> logs = new HashSet<Log>();
+        logs.add(log1);*/
 
         //Task task1 = new Task();
-        //task1.setName("KOSIAK");
-        //task1.setPerson(person);
-        //task1.setLogs(logs);
+        /*task1.setName("DECRET");
+        task1.setPerson(person);
+        task1.setLogs(logs);
 
-
-        //log1.setTask(task1);
-        //tasks.add(task1);
-        //person.setTasks(tasks);
+        log1.setTask(task1);
+        tasks.add(task1);
+        person.setTasks(tasks);
 
         personDAO.addPerson(person);
-        //taskDAO.addTask(task1);
-        //logDAO.addLog(log1);
+        taskDAO.addTask(task1);
+        logDAO.addLog(log1);*/
+
+        //person.setSecondName("Popko");
+        //person.setLogin("zvezdofeevna");
+        //task1.setStatus("in process");
+
+        List<Person> list = personDAO.getAllPeople();
+
+        list.forEach((Person person) -> System.out.println(person.getFirstName() + " " + person.getMiddleName() + " " + person.getSecondName() + " " + person.getLogin() + " " + person.getPassword()));
+
         HibernateUtil.shutdown();
     }
 }

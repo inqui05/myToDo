@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+<class name="main.java.table.Task" table="TASK">
+    <id name="id" column="TASK_ID" type="java.lang.Integer">
+        <generator class="increment"/>
+    </id>
+    <property name="name" column="NAME" type="java.lang.String"/>
+    <property name="status" column="STATUS" type="java.lang.String"/>
+    <many-to-one name="person" class="main.java.table.Person">
+        <column name="PERSON_ID" not-null="true"/>
+    </many-to-one>
+    <set name="logs" table="LOG" lazy="false">
+        <key><column name="TASK_ID" not-null="true"/></key>
+        <one-to-many class="main.java.table.Log"/>
+    </set>
+</class>
+
+</hibernate-mapping>
