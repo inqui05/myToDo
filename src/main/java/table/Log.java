@@ -6,23 +6,23 @@ import javax.persistence.*;
  * Created by Artsiom Tratsiuk on 31.03.2015.
  */
 
-@Entity
-@Table(name = "log")
+//@Entity
+//@Table(name = "log")
 public class Log {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "log_id", unique = true, nullable = false)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name = "log_id", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "elapsed_time", nullable = true)
+    //@Column(name = "elapsed_time", nullable = true)
     private int time;
 
-    @Column(length = 1000, nullable = false)
+    //@Column(length = 1000, nullable = false)
     private String comment;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "task_id")
+    //@ManyToOne(fetch=FetchType.EAGER)
+    //@JoinColumn(name = "task_id")
     private Task task;
 
     public Log() {

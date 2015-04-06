@@ -1,6 +1,5 @@
 package main.java.table;
 
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,32 +8,32 @@ import java.util.Set;
  * Created by Artsiom Tratsiuk on 31.03.2015.
  */
 
-@Entity
-@Table(name = "person")
+//@Entity
+//@Table(name = "person")
 public class Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "person_id")
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "person_id")
     private int id;
 
-    @Column(name = "first_name")
+    //@Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "middle_name")
+    //@Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "second_name")
+    //@Column(name = "second_name")
     private String secondName;
 
-    @Column
+    //@Column
     private String login;
 
-    @Column
+    //@Column
     private String password;
 
-    @OneToMany(fetch=FetchType.EAGER, mappedBy = "person")
-    private Set<Task> tasks = new HashSet<Task>();
+    //@OneToMany(fetch=FetchType.EAGER, mappedBy = "person")
+    private Set<Task> tasks = new HashSet<Task>(0);
 
     public Person() {
     }

@@ -8,26 +8,26 @@ import java.util.Set;
  * Created by Artsiom Tratsiuk on 31.03.2015.
  */
 
-@Entity
-@Table(name = "task")
+//@Entity
+//@Table(name = "task")
 public class Task {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "task_id", unique = true, nullable = false)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@Column(name = "task_id", unique = true, nullable = false)
     private int id;
 
-    @Column(length = 1000, nullable = false)
+    //@Column(length = 1000, nullable = false)
     private String name;
 
-    @Column
+    //@Column
     private String status;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "person_id")
+    //@ManyToOne(fetch=FetchType.EAGER)
+    //@JoinColumn(name = "person_id")
     private Person person;
 
-    @OneToMany(fetch=FetchType.EAGER, mappedBy = "task")
+    //@OneToMany(fetch=FetchType.EAGER, mappedBy = "task")
     private Set<Log> logs = new HashSet<Log>();
 
     public Task() {

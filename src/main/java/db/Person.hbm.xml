@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+<class name="main.java.table.Person" table="PERSON">
+    <id name="id" column="PERSON_ID" type="java.lang.Integer">
+        <generator class="increment"/>
+    </id>
+    <property name="firstName" column="FIRST_NAME" type="java.lang.String"/>
+    <property name="middleName" column="MIDDLE_NAME" type="java.lang.String"/>
+    <property name="secondName" column="SECOND_NAME" type="java.lang.String"/>
+    <property name="login" column="LOGIN" type="java.lang.String"/>
+    <property name="password" column="PASSWORD" type="java.lang.String"/>
+    <set name="tasks" table="TASK" lazy="false">
+        <key><column name="PERSON_ID" not-null="true"/></key>
+        <one-to-many class="main.java.table.Task"/>
+    </set>
+</class>
+
+</hibernate-mapping>

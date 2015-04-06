@@ -28,22 +28,22 @@ public class Project {
         TaskDAO taskDAO = factory.getTaskDAO();
         LogDAO logDAO = factory.getLogDAO();
 
-        Person person = new Person();
-        person.setFirstName("Nadia");
+        //Person person = new Person();
+        /*person.setFirstName("Nadia");
         person.setMiddleName("Nikolaevna");
         person.setSecondName("Tratsiuk");
         person.setLogin("loshara");
         person.setPassword("lol");
-        Set<Task> tasks = new HashSet<Task>();
+        Set<Task> tasks = new HashSet<Task>();*/
 
-        Log log1 =  new Log();
-        log1.setComment("SLEEP HARD PLAY HARD");
+        //Log log1 =  new Log();
+        /*log1.setComment("SLEEP HARD PLAY HARD");
         log1.setTime(19999999);
         Set<Log> logs = new HashSet<Log>();
-        logs.add(log1);
+        logs.add(log1);*/
 
-        Task task1 = new Task();
-        task1.setName("DECRET");
+        //Task task1 = new Task();
+        /*task1.setName("DECRET");
         task1.setPerson(person);
         task1.setLogs(logs);
 
@@ -53,15 +53,15 @@ public class Project {
 
         personDAO.addPerson(person);
         taskDAO.addTask(task1);
-        logDAO.addLog(log1);
+        logDAO.addLog(log1);*/
 
-        person.setSecondName("Popko");
-        person.setLogin("zvezdofeevna");
-        task1.setStatus("in process");
+        //person.setSecondName("Popko");
+        //person.setLogin("zvezdofeevna");
+        //task1.setStatus("in process");
 
         List<Person> list = personDAO.getAllPeople();
 
-        list.forEach((Person person5) -> System.out.println(person5.getFirstName() + " " + person5.getMiddleName() + " " + person5.getSecondName() + " " + person5.getLogin() + " " + person5.getPassword()));
+        list.forEach((Person person) -> System.out.println(person.getFirstName() + " " + person.getMiddleName() + " " + person.getSecondName() + " " + person.getLogin() + " " + person.getPassword()));
 
         HibernateUtil.shutdown();
     }
