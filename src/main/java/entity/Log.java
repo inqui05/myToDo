@@ -1,6 +1,8 @@
 package main.java.entity;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -27,6 +29,13 @@ public class Log {
     private Task task;
 
     public Log() {
+        this(0, 0, null);
+    }
+
+    public Log(int id, int time, String comment) {
+        this.id = new SimpleIntegerProperty(id);
+        this.time = new SimpleIntegerProperty(time);
+        this.comment = new SimpleStringProperty(comment);
     }
 
     public void setId(int id) {

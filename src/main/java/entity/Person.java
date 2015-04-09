@@ -1,6 +1,11 @@
 package main.java.entity;
 
-import javafx.beans.property.*;
+
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +38,7 @@ public class Person {
     //@Column
     private StringProperty password;
 
-    //@OneToMany(fetch=FetchType.EAGER, mappedBy = "person")
+    //@OneToMany(fetch=FetchType.LAZY, mappedBy = "person")
     private Set<Task> tasks = new HashSet<Task>() {
     };
 
@@ -58,8 +63,8 @@ public class Person {
         return id.get();
     }
 
-    public Integer idProperty(){
-        return id.get();
+    public IntegerProperty idProperty(){
+        return id;
     }
 
     public void setFirstName(String firstName) {

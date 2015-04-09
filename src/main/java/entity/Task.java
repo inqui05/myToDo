@@ -1,9 +1,6 @@
 package main.java.entity;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SetProperty;
-import javafx.beans.property.SimpleSetProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +32,13 @@ public class Task {
     private Set<Log> logs = new HashSet<Log>();
 
     public Task() {
+        this(0, null, null);
+    }
+
+    public Task(int id, String name, String status) {
+        this.id = new SimpleIntegerProperty(id);
+        this.name = new SimpleStringProperty(name);
+        this.status = new SimpleStringProperty(status);
     }
 
     public void setId(int id) {
