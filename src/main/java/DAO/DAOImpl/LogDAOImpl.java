@@ -1,8 +1,8 @@
 package main.java.DAO.DAOImpl;
 
 import main.java.DAO.LogDAO;
-import main.java.table.Log;
-import main.java.table.Task;
+import main.java.entity.Log;
+import main.java.entity.Task;
 import main.java.util.HibernateUtil;
 import org.hibernate.Session;
 

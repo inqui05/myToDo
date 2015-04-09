@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-<class name="main.java.table.Person" table="PERSON">
+<class name="main.java.entity.Person" table="PERSON">
     <id name="id" column="PERSON_ID" type="java.lang.Integer">
         <generator class="increment"/>
     </id>
@@ -16,7 +16,7 @@
     <property name="password" column="PASSWORD" type="java.lang.String"/>
     <set name="tasks" table="TASK" lazy="false">
         <key><column name="PERSON_ID" not-null="true"/></key>
-        <one-to-many class="main.java.table.Task"/>
+        <one-to-many class="main.java.entity.Task"/>
     </set>
 </class>
 

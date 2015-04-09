@@ -1,13 +1,12 @@
 package main.java.DAO.DAOImpl;
 
 import main.java.DAO.TaskDAO;
-import main.java.table.Person;
-import main.java.table.Task;
+import main.java.entity.Person;
+import main.java.entity.Task;
 import main.java.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

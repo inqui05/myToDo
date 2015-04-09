@@ -17,14 +17,14 @@
         <items>
           <AnchorPane prefHeight="550.0" prefWidth="725.0">
                <children>
-                  <TableView prefHeight="513.0" prefWidth="721.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="personTable" prefHeight="513.0" prefWidth="721.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn prefWidth="48.0" text="id" />
-                      <TableColumn prefWidth="134.0" text="Фамилия" />
-                        <TableColumn prefWidth="137.0" text="Имя" />
-                        <TableColumn prefWidth="148.0" text="Отчество" />
-                        <TableColumn prefWidth="125.0" text="Логин" />
-                        <TableColumn prefWidth="128.0" text="Пароль" />
+                      <TableColumn fx:id="personIdColumn" prefWidth="48.0" text="id" />
+                      <TableColumn fx:id="secondNameColumn" prefWidth="134.0" text="Фамилия" />
+                        <TableColumn fx:id="firstNameColumn" prefWidth="137.0" text="Имя" />
+                        <TableColumn fx:id="middleNameColumn" prefWidth="148.0" text="Отчество" />
+                        <TableColumn fx:id="loginColumn" prefWidth="125.0" text="Логин" />
+                        <TableColumn fx:id="passwordColumn" prefWidth="128.0" text="Пароль" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -50,7 +50,7 @@
                            <children>
                               <Label contentDisplay="CENTER" layoutX="58.0" layoutY="3.0" prefHeight="25.0" prefWidth="149.0" text="Задачи пользователя" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="0.0">
                                  <font>
-                                    <Font name="Times New Roman" size="17.0" />
+                                    <Font name="Times New Roman" size="16.0" />
                                  </font>
                               </Label>
                               <HBox layoutX="261.0" layoutY="244.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
@@ -60,11 +60,11 @@
                                     <Button layoutX="250.0" layoutY="249.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Удалить" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="175.0" />
                                  </children>
                               </HBox>
-                              <TableView layoutX="93.0" layoutY="22.0" prefHeight="210.0" prefWidth="469.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0">
+                              <TableView fx:id="taskTable" layoutX="93.0" layoutY="22.0" prefHeight="210.0" prefWidth="469.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0">
                                 <columns>
-                                  <TableColumn prefWidth="50.0" text="id" />
-                                  <TableColumn prefWidth="324.0" text="Задачи" />
-                                    <TableColumn prefWidth="94.0" text="Статус" />
+                                  <TableColumn fx:id="taskIdColumn" prefWidth="50.0" text="id" />
+                                  <TableColumn fx:id="nameColumn" prefWidth="324.0" text="Задачи" />
+                                    <TableColumn fx:id="statusColumn" prefWidth="94.0" text="Статус" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -79,10 +79,10 @@
                                     <Font name="Times New Roman" size="16.0" />
                                  </font>
                               </Label>
-                              <TableView layoutX="69.0" layoutY="35.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+                              <TableView fx:id="logTable" layoutX="69.0" layoutY="35.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
                                 <columns>
-                                  <TableColumn prefWidth="340.0" text="заметка" />
-                                    <TableColumn minWidth="0.0" prefWidth="127.0" text="затрачено времени" />
+                                  <TableColumn fx:id="commentColumn" prefWidth="340.0" text="заметка" />
+                                    <TableColumn fx:id="timeColumn" minWidth="0.0" prefWidth="127.0" text="затрачено времени" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -1,8 +1,7 @@
 package main.java.DAO.DAOImpl;
 
 import main.java.DAO.PersonDAO;
-import main.java.table.Person;
-import main.java.table.Task;
+import main.java.entity.Person;
 import main.java.util.HibernateUtil;
 import org.hibernate.Session;
 

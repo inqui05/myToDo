@@ -1,0 +1,132 @@
+package main.java.entity;
+
+import javafx.beans.property.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Created by Artsiom Tratsiuk on 31.03.2015.
+ */
+
+//@Entity
+//@Table(name = "person")
+public class Person {
+
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "person_id")
+    private IntegerProperty id;
+
+    //@Column(name = "first_name")
+    private StringProperty firstName;
+
+    //@Column(name = "middle_name")
+    private StringProperty middleName;
+
+    //@Column(name = "second_name")
+    private StringProperty secondName;
+
+    //@Column
+    private StringProperty login;
+
+    //@Column
+    private StringProperty password;
+
+    //@OneToMany(fetch=FetchType.EAGER, mappedBy = "person")
+    private Set<Task> tasks = new HashSet<Task>() {
+    };
+
+    public Person() {
+        this(0, null,null, null, null, null);
+    }
+
+    public Person(int id, String firstName, String middleName, String secondName, String login, String password){
+        this.id = new SimpleIntegerProperty(id);
+        this.firstName = new SimpleStringProperty(firstName);
+        this.middleName = new SimpleStringProperty(middleName);
+        this.secondName = new SimpleStringProperty(secondName);
+        this.login = new SimpleStringProperty(login);
+        this.password = new SimpleStringProperty(password);
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public Integer idProperty(){
+        return id.get();
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName.set(firstName);
+    }
+
+    public String getFirstName() {
+        return firstName.get();
+    }
+
+    public StringProperty firstNameProperty(){
+        return firstName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName.set(middleName);
+    }
+
+    public String getMiddleName() {
+        return middleName.get();
+    }
+
+    public StringProperty middleNameProperty(){
+        return middleName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName.set(secondName);
+    }
+
+    public String getSecondName() {
+        return secondName.get();
+    }
+
+    public StringProperty secondNameProperty(){
+        return secondName;
+    }
+
+    public void setLogin(String login) {
+        this.login.set(login);
+    }
+
+    public String getLogin() {
+        return login.get();
+    }
+
+    public StringProperty loginProperty(){
+        return login;
+    }
+
+    public void setPassword(String password) {
+        this.password.set(password);
+    }
+
+    public String getPassword() {
+        return password.get();
+    }
+
+    public StringProperty passwordProperty(){
+        return password;
+    }
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+}

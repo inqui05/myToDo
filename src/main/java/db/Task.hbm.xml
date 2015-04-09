@@ -5,18 +5,18 @@
 
 <hibernate-mapping>
 
-<class name="main.java.table.Task" table="TASK">
+<class name="main.java.entity.Task" table="TASK">
     <id name="id" column="TASK_ID" type="java.lang.Integer">
         <generator class="increment"/>
     </id>
     <property name="name" column="NAME" type="java.lang.String"/>
     <property name="status" column="STATUS" type="java.lang.String"/>
-    <many-to-one name="person" class="main.java.table.Person">
+    <many-to-one name="person" class="main.java.entity.Person">
         <column name="PERSON_ID" not-null="true"/>
     </many-to-one>
     <set name="logs" table="LOG" lazy="false">
         <key><column name="TASK_ID" not-null="true"/></key>
-        <one-to-many class="main.java.table.Log"/>
+        <one-to-many class="main.java.entity.Log"/>
     </set>
 </class>
 

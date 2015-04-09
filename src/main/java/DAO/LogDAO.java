@@ -1,7 +1,7 @@
 package main.java.DAO;
 
-import main.java.table.Log;
-import main.java.table.Task;
+import main.java.entity.Log;
+import main.java.entity.Task;
 
 import java.sql.SQLException;
 import java.util.List;

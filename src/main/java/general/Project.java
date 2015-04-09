@@ -3,15 +3,11 @@ package main.java.general;
 import main.java.DAO.LogDAO;
 import main.java.DAO.PersonDAO;
 import main.java.DAO.TaskDAO;
-import main.java.table.Log;
-import main.java.table.Person;
-import main.java.table.Task;
+import main.java.entity.Person;
 import main.java.util.HibernateUtil;
 
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Artsiom Tratsiuk on 01.04.2015.

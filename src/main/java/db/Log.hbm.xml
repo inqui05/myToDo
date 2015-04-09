@@ -5,13 +5,13 @@
 
 <hibernate-mapping>
 
-<class name="main.java.table.Log" table="LOG">
+<class name="main.java.entity.Log" table="LOG">
     <id name="id" column="LOG_ID" type="java.lang.Integer">
         <generator class="increment"/>
     </id>
     <property name="time" column="ELAPSED_TIME" type="java.lang.Integer"/>
     <property name="comment" column="COMMENT" type="java.lang.String"/>
-    <many-to-one name="task" class="main.java.table.Task">
+    <many-to-one name="task" class="main.java.entity.Task">
         <column name="TASK_ID" not-null="true"/>
     </many-to-one>
 </class>
