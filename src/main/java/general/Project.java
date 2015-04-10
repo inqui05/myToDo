@@ -53,12 +53,8 @@ public class Project {
         //person.setTasks(tasks);
 
         personDAO.addPerson(person);
-        //taskDAO.addTask(task1);
-        //logDAO.addLog(log1);
-
-        //person.setSecondName("Popko");
-        //person.setLogin("zvezdofeevna");
-        //task1.setStatus("in process");
+        taskDAO.addTask(task1);
+        logDAO.addLog(log1);
 
         /*List<Person> list = personDAO.getAllPeople();
 

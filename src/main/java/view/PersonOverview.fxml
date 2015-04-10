@@ -32,9 +32,9 @@
                   </TableView>
                   <HBox cacheHint="QUALITY" layoutX="70.0" layoutY="489.0" prefHeight="25.0" prefWidth="211.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
                      <children>
-                        <Button layoutX="23.0" layoutY="489.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Добавить " AnchorPane.leftAnchor="70.0" />
-                        <Button layoutX="293.0" layoutY="489.0" mnemonicParsing="false" text="Изменить" AnchorPane.rightAnchor="280.0" />
-                        <Button layoutX="428.0" layoutY="489.0" mnemonicParsing="false" text="Удалить" AnchorPane.rightAnchor="70.0" />
+                        <Button layoutX="23.0" layoutY="489.0" mnemonicParsing="false" onAction="#handleNewPerson" prefHeight="25.0" prefWidth="72.0" text="Добавить " AnchorPane.leftAnchor="70.0" />
+                        <Button layoutX="293.0" layoutY="489.0" mnemonicParsing="false" onAction="#handleEditPerson" text="Изменить" AnchorPane.rightAnchor="280.0" />
+                        <Button layoutX="428.0" layoutY="489.0" mnemonicParsing="false" onAction="#handleDeletePerson" text="Удалить" AnchorPane.rightAnchor="70.0" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -57,7 +57,7 @@
                                  <children>
                                     <Button layoutX="7.0" layoutY="249.0" mnemonicParsing="false" text="Добавить " AnchorPane.leftAnchor="5.0" />
                                     <Button layoutX="126.0" layoutY="249.0" mnemonicParsing="false" text="Изменить " AnchorPane.leftAnchor="120.0" />
-                                    <Button layoutX="250.0" layoutY="249.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Удалить" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="175.0" />
+                                    <Button layoutX="250.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleDeleteTask" prefHeight="25.0" prefWidth="60.0" text="Удалить" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="175.0" />
                                  </children>
                               </HBox>
                               <TableView fx:id="taskTable" layoutX="93.0" layoutY="22.0" prefHeight="210.0" prefWidth="469.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0">
@@ -99,7 +99,7 @@
          <children>
             <Button layoutX="7.0" layoutY="249.0" mnemonicParsing="false" text="Добавить " AnchorPane.leftAnchor="5.0" />
             <Button layoutX="126.0" layoutY="249.0" mnemonicParsing="false" text="Изменить " AnchorPane.leftAnchor="120.0" />
-            <Button layoutX="250.0" layoutY="249.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Удалить" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="175.0" />
+            <Button layoutX="250.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleDeleteLog" prefHeight="25.0" prefWidth="60.0" text="Удалить" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="175.0" />
          </children>
       </HBox>
    </children>
