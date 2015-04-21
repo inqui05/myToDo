@@ -3,10 +3,20 @@ package main.java.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import main.java.DAO.DAOImpl.LogDAOImpl;
+import main.java.DAO.DAOImpl.PersonDAOImpl;
+import main.java.DAO.DAOImpl.TaskDaoImpl;
+import main.java.DAO.LogDAO;
+import main.java.DAO.PersonDAO;
+import main.java.DAO.TaskDAO;
 import main.java.MainApp;
 import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
+
+import java.sql.SQLException;
+import java.util.List;
+
 
 /**
  * Created by Artsiom Tratsiuk on 08.04.2015.
@@ -47,7 +57,11 @@ public class PersonOverviewController {
     @FXML
     private TableColumn<Log, Number> timeColumn;
 
-    // Reference to the main application./////////////////////////////////////////////////////////////////////////////
+    PersonDAO personDAO = new PersonDAOImpl();
+    TaskDAO taskDAO = new TaskDaoImpl();
+    LogDAO logDAO = new LogDAOImpl();
+
+    // Reference to the main application.
     private MainApp mainApp;
 
     /**
@@ -62,7 +76,7 @@ public class PersonOverviewController {
      * after the fxml file has been loaded.
      */
     @FXML
-    private void initialize() {
+    private void initialize()throws SQLException{
         // Initialize the person table with the six columns and the task table with the three columns and the log table with the two columns
         personIdColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         secondNameColumn.setCellValueFactory(cellData -> cellData.getValue().secondNameProperty());
@@ -95,16 +109,17 @@ public class PersonOverviewController {
         commentColumn.setCellValueFactory(cellData -> cellData.getValue().commentProperty());
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
 
-        /* АКТИВИРОВАТЬ ПОСЛЕ ИЗМЕНЕНИЯ МЕТОДА showTasks() И showLogs()
-        // Clear details.
-        showTasks(null);
-        showLogs(null);
 
         // Listen for selection changes and show the person details when changed.
         personTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showTasks(newValue));
+            (observable, oldValue, newValue) -> { try{showTasks(newValue);}catch (SQLException esql){
+                System.err.println("esql");
+            }});
+
         taskTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showLogs(newValue));*/
+            (observable, oldValue, newValue) -> { try{showLogs(newValue);}catch (SQLException esql){
+                System.err.println("esql");
+            }});
     }
 
     /**
@@ -112,51 +127,46 @@ public class PersonOverviewController {
      *
      * @param mainApp
      */
-    public void setMainApp(MainApp mainApp) {
+    public void setMainApp(MainApp mainApp) throws SQLException {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
         personTable.setItems(mainApp.getPersonData());
-        taskTable.setItems(mainApp.getTaskData());
-        logTable.setItems(mainApp.getLogData());
     }
 
     /**
      * Fills all text fields to show details about tasks
      *
-     *  person the person or null                        РАЗОБРАТЬСЯ И СДЕЛАТЬ (3 страница)!!! Задачи и логи должны выводиться с привязкой к конкретному человеку!
+     *  person the person or null
      */
 
-    /*private void showTasks(Person person) {
+    private void showTasks(Person person) throws SQLException {
         if (person != null) {
-            // Fill the labels with info from the person object.
-
-
-            // TODO: We need a way to convert the birthday into a String!
-            // birthdayLabel.setText(...);
-        } else {
-            // Person is null, remove all the text.
-            firstNameLabel.setText("");
-            lastNameLabel.setText("");
-            streetLabel.setText("");
-            postalCodeLabel.setText("");
-            cityLabel.setText("");
-            birthdayLabel.setText("");
+            taskTable.setItems(mainApp.getTaskData(person));
+        }
+        else{
+            taskTable.setItems(null);
         }
     }
 
-    private void showLogs(Task task) {
+    private void showLogs(Task task) throws SQLException {
+        if(task != null){
+            logTable.setItems(mainApp.getLogData(task));
+        }
+        else{
+            logTable.setItems(null);
+        }
     }
-    */
 
     @FXML
-    private void handleDeleteLog() {
+    private void handleDeleteLog() throws SQLException{
         int selectedIndex = logTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            //прописаться условия
+            //ГОТОВО, НАДО ПРОТЕСТИРОВАТЬ
+            logDAO.deleteLog(logTable.getItems().get(selectedIndex));
             logTable.getItems().remove(selectedIndex);
         } else {
-            // if i'm selected nothing
+            // if i will select nothing
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Заметка не выбрана!");
             alert.setHeaderText(null);
@@ -170,16 +180,21 @@ public class PersonOverviewController {
         }
     }
 
-    //Разобраться и возможно удалять вместе с задачей и все логи
+    //удалять вместе с задачей и все логи
     @FXML
-    private void handleDeleteTask() {
+    private void handleDeleteTask() throws SQLException {
         int selectedIndex = taskTable.getSelectionModel().getSelectedIndex();
-        //int deleteTaskId = taskTable.getItems().get(selectedIndex).getId(); получить id задачи
-
         if (selectedIndex >= 0) {
+            List<Log> logs = logDAO.getLogByTask(taskTable.getItems().get(selectedIndex));
+            if(logs.size() > 0){
+                for (Log log : logs) {
+                    logDAO.deleteLog(log);
+                }
+            }
+            taskDAO.deleteTask(taskTable.getItems().get(selectedIndex));
             taskTable.getItems().remove(selectedIndex);
         } else {
-            // if i'm selected nothing
+            // if i will select nothing
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Задача не выбрана!");
             alert.setHeaderText(null);
@@ -192,15 +207,24 @@ public class PersonOverviewController {
             alert.showAndWait();
         }
     }
-    //Разобраться и возможно при удалении человека удалять все его задачи и логи
+    // ВРОДЕ НАСТРОИЛ, НО НАДО ПРОВЕРИТЬ!!!
+    //при удалении человека удалять все его задачи и логи
     @FXML
-    private void handleDeletePerson() {
+    private void handleDeletePerson() throws SQLException {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
-
         if (selectedIndex >= 0) {
+            List<Task> tasks = taskDAO.getTasksByPerson(personTable.getItems().get(selectedIndex));
+            for(Task task : tasks){
+                List<Log> logs = logDAO.getLogByTask(task);
+                for(Log log : logs){
+                    logDAO.deleteLog(log);
+                }
+                taskDAO.deleteTask(task);
+            }
+            personDAO.deletePerson(personTable.getItems().get(selectedIndex));
             personTable.getItems().remove(selectedIndex);
         } else {
-            // if i'm selected nothing
+            // if i will select nothing
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Пользователь не выбран!");
             alert.setHeaderText(null);
@@ -213,13 +237,13 @@ public class PersonOverviewController {
             alert.showAndWait();
         }
     }
-
+    // ДО СЮДА ВСЕ ИСПРАВЛЕНО
     /**
      * Called when the user clicks the new button. Opens a dialog to edit
      * details for a new person.
      */
     @FXML
-    private void handleNewPerson() {
+    private void handleNewPerson() throws SQLException {
         Person tempPerson = new Person();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {

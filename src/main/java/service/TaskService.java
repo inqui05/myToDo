@@ -26,7 +26,7 @@ public class TaskService {
         taskDAO.updateTask(task);
     }
 
-    List<Task> getTasksByPerson(Person person) throws SQLException{
+    public List<Task> getTasksByPerson(Person person) throws SQLException{
         return taskDAO.getTasksByPerson(person);
     }
 

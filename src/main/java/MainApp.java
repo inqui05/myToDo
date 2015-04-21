@@ -12,6 +12,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.java.DAO.DAOImpl.LogDAOImpl;
+import main.java.DAO.DAOImpl.PersonDAOImpl;
+import main.java.DAO.DAOImpl.TaskDaoImpl;
+import main.java.DAO.LogDAO;
+import main.java.DAO.PersonDAO;
+import main.java.DAO.TaskDAO;
 import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
@@ -19,14 +25,16 @@ import main.java.view.PersonEditDialogController;
 import main.java.view.PersonOverviewController;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
-public class MainApp extends Application {   //  http://code.makery.ch/library/javafx-8-tutorial/ru/part2/
+public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SQLException {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Менеджер задач ToDo");
 
@@ -57,7 +65,7 @@ public class MainApp extends Application {   //  http://code.makery.ch/library/j
     /**
      * Shows the person overview inside the root layout.
      */
-    public void showPersonOverview() {
+    public void showPersonOverview() throws SQLException {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -85,17 +93,27 @@ public class MainApp extends Application {   //  http://code.makery.ch/library/j
     private ObservableList<Person> personData = FXCollections.observableArrayList();
     private ObservableList<Task> taskData = FXCollections.observableArrayList();
     private ObservableList<Log> logData = FXCollections.observableArrayList();
+    PersonDAO personDAO = new PersonDAOImpl();
+    TaskDAO taskDAO = new TaskDaoImpl();
+    LogDAO logDAO = new LogDAOImpl();
 
-    public ObservableList<Person> getPersonData() {
+    // ТУТ СЧИТЫВАЕМ СПИСКИ ИЗ БД
+    public ObservableList<Person> getPersonData() throws SQLException {
+        if(!personData.isEmpty())personData.clear();
+        personData = FXCollections.observableList((List<Person>) personDAO.getAllPeople());
         return personData;
     }
-    public ObservableList<Task> getTaskData() {
+    public ObservableList<Task> getTaskData(Person person) throws SQLException {
+        if(!taskData.isEmpty())taskData.clear();
+        taskData = FXCollections.observableList((List<Task>) taskDAO.getTasksByPerson(person));
         return taskData;
     }
-    public ObservableList<Log> getLogData() {
+    public ObservableList<Log> getLogData(Task task) throws SQLException {
+        if(!logData.isEmpty()) logData.clear();
+        logData =  FXCollections.observableList((List<Log>) logDAO.getLogByTask(task));
         return logData;
     }
-
+    //ДО СЮДА ВСЕ ОТКОРРЕКТИРОВАННО
     /**
      * Opens a dialog to edit details for the specified person. If the user
      * clicks OK, the changes are saved into the provided person object and true

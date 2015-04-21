@@ -67,7 +67,7 @@ public class LogDAOImpl implements LogDAO{
         try{
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            String hqlSelect = "FROM Log WHERE taskId = :id";
+            String hqlSelect = "FROM Log WHERE TASK_ID = :id";
             logs = session.createQuery(hqlSelect).setParameter("id", task.getId()).list();
             session.getTransaction().commit();
         }catch(Exception e){

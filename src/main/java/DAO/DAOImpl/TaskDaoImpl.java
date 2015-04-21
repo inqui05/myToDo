@@ -67,7 +67,7 @@ public class TaskDaoImpl implements TaskDAO{
         try{
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            String hqlSelect = "FROM Task WHERE personId = :id";
+            String hqlSelect = "FROM Task WHERE PERSON_ID = :id";
             tasks = session.createQuery(hqlSelect).setParameter("id", person.getId()).list();
             session.getTransaction().commit();
         }catch(Exception e){
