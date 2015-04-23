@@ -77,7 +77,7 @@ public class PersonOverviewController {
      */
     @FXML
     private void initialize()throws SQLException{
-        // Initialize the person table with the six columns and the task table with the three columns and the log table with the two columns
+        // Initialize the person table with the six columns
         personIdColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         secondNameColumn.setCellValueFactory(cellData -> cellData.getValue().secondNameProperty());
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
@@ -85,6 +85,7 @@ public class PersonOverviewController {
         loginColumn.setCellValueFactory(cellData -> cellData.getValue().loginProperty());
         passwordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
 
+        // Initialize the task table with the three columns
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().taskIdProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         statusColumn.setCellFactory(column -> new TableCell<Task, String>() {
@@ -106,6 +107,7 @@ public class PersonOverviewController {
             }
         });
 
+        //Initialize the log table with the two columns
         commentColumn.setCellValueFactory(cellData -> cellData.getValue().commentProperty());
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().timeProperty());
 
@@ -207,7 +209,7 @@ public class PersonOverviewController {
             alert.showAndWait();
         }
     }
-    // ВРОДЕ НАСТРОИЛ, НО НАДО ПРОВЕРИТЬ!!!
+
     //при удалении человека удалять все его задачи и логи
     @FXML
     private void handleDeletePerson() throws SQLException {
@@ -237,7 +239,7 @@ public class PersonOverviewController {
             alert.showAndWait();
         }
     }
-    // ДО СЮДА ВСЕ ИСПРАВЛЕНО
+
     /**
      * Called when the user clicks the new button. Opens a dialog to edit
      * details for a new person.
@@ -247,7 +249,8 @@ public class PersonOverviewController {
         Person tempPerson = new Person();
         boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
         if (okClicked) {
-            mainApp.getPersonData().add(tempPerson);
+            personDAO.addPerson(tempPerson);
+            personTable.setItems(mainApp.getPersonData());
         }
     }
 
@@ -256,16 +259,15 @@ public class PersonOverviewController {
      * details for the selected person.
      */
     @FXML
-    private void handleEditPerson() {
+    private void handleEditPerson() throws SQLException {
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         if (selectedPerson != null) {
             boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
             if (okClicked) {
-                //showTasks(selectedPerson);                               ИСПРАВИТЬ ПОСЛЕ НАПИСАНИЯ МЕТОДА showTasks() И showLogs(
+                personDAO.updatePerson(selectedPerson);
             }
         } else {
             // Nothing selected.
-            // if i'm selected nothing
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Пользователь не выбран!");
             alert.setHeaderText(null);

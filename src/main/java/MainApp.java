@@ -113,7 +113,7 @@ public class MainApp extends Application {
         logData =  FXCollections.observableList((List<Log>) logDAO.getLogByTask(task));
         return logData;
     }
-    //ДО СЮДА ВСЕ ОТКОРРЕКТИРОВАННО
+
     /**
      * Opens a dialog to edit details for the specified person. If the user
      * clicks OK, the changes are saved into the provided person object and true
