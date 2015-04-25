@@ -3,6 +3,7 @@ package main.java.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import main.java.DAO.DAOImpl.LogDAOImpl;
 import main.java.DAO.DAOImpl.PersonDAOImpl;
 import main.java.DAO.DAOImpl.TaskDaoImpl;
@@ -13,6 +14,7 @@ import main.java.MainApp;
 import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
+import org.controlsfx.dialog.Dialogs;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -77,6 +79,10 @@ public class PersonOverviewController {
      */
     @FXML
     private void initialize()throws SQLException{
+        personTable.setPlaceholder(new Text("В данный момент в программе отсутствуют пользователи"));
+        taskTable.setPlaceholder(new Text("Пользователь не выбран либо выбранному пользователю не назначены задачи!"));
+        logTable.setPlaceholder(new Text("Задача не выбрана либо к выбранной задаче нету комментариев!"));
+
         // Initialize the person table with the six columns
         personIdColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         secondNameColumn.setCellValueFactory(cellData -> cellData.getValue().secondNameProperty());
@@ -240,6 +246,7 @@ public class PersonOverviewController {
         }
     }
 
+    //ДОБАВИТЬ ИЛИ КОРРЕКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯ
     /**
      * Called when the user clicks the new button. Opens a dialog to edit
      * details for a new person.
@@ -272,6 +279,66 @@ public class PersonOverviewController {
             alert.setTitle("Пользователь не выбран!");
             alert.setHeaderText(null);
             alert.setContentText("Пожалуйста, выберите пользователя в таблице!");
+            alert.showAndWait();
+        }
+    }
+
+    //ДОБАВИТЬ ИЛИ КОРРЕКТИРОВАТЬ ЗАДАЧУ
+
+    /**
+     * Called when the user clicks the new button. Opens a dialog to edit
+     * details for a new person.
+     */
+    @FXML
+    private void handleNewTask() {
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        if(null == selectedPerson) {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Пользователь не выбран!");
+            alert.setHeaderText(null);
+            alert.setContentText("Выберите пользователя, которому необходимо назначить задачу!");
+            alert.showAndWait();
+        }
+        else{
+            Task tempTask = new Task();
+            boolean okClicked = mainApp.showTaskEditDialog(tempTask);
+
+            if (okClicked) {
+                try {
+                    tempTask.setPerson(selectedPerson);
+                    taskDAO.addTask(tempTask);
+                    taskTable.setItems(mainApp.getTaskData(selectedPerson));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected task.
+     */
+    @FXML
+    private void handleEditTask() {
+        Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        if (selectedTask != null) {
+            boolean okClicked = mainApp.showTaskEditDialog(selectedTask);
+            if (okClicked) {
+                try {
+                    taskDAO.updateTask(selectedTask);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Задача не выбрана!");
+            alert.setHeaderText(null);
+            alert.setContentText("Пожалуйста, выберите задачу в таблице!");
             alert.showAndWait();
         }
     }

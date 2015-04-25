@@ -23,6 +23,7 @@ import main.java.entity.Person;
 import main.java.entity.Task;
 import main.java.view.PersonEditDialogController;
 import main.java.view.PersonOverviewController;
+import main.java.view.TaskEditDialogController;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws SQLException {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Менеджер задач ToDo");
+        this.primaryStage.setTitle("Менеджер задач");
 
         initRootLayout();
 
@@ -131,7 +132,7 @@ public class MainApp extends Application {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Редактировать пользователя");
+            dialogStage.setTitle("Пользователь");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
@@ -147,6 +148,47 @@ public class MainApp extends Application {
 
             return controller.isOkClicked();
         } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+        //КОММЕНТЫ
+    /**
+     * Opens a dialog to edit details for the specified person. If the user
+     * clicks OK, the changes are saved into the provided person object and true
+     * is returned.
+     *
+     * @param task the task object to be edited
+     * @return true if the user clicked OK, false otherwise.
+     */
+    public boolean showTaskEditDialog(Task task) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/TaskEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Задача");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            TaskEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setTask(task);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }

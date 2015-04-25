@@ -55,8 +55,8 @@
                               </Label>
                               <HBox layoutX="261.0" layoutY="244.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">
                                  <children>
-                                    <Button layoutX="7.0" layoutY="249.0" mnemonicParsing="false" text="Добавить " AnchorPane.leftAnchor="5.0" />
-                                    <Button layoutX="126.0" layoutY="249.0" mnemonicParsing="false" text="Изменить " AnchorPane.leftAnchor="120.0" />
+                                    <Button layoutX="7.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleNewTask" text="Добавить " AnchorPane.leftAnchor="5.0" />
+                                    <Button layoutX="126.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleEditTask" text="Изменить " AnchorPane.leftAnchor="120.0" />
                                     <Button layoutX="250.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleDeleteTask" prefHeight="25.0" prefWidth="60.0" text="Удалить" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="175.0" />
                                  </children>
                               </HBox>

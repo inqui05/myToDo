@@ -6,6 +6,7 @@ import main.java.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ import java.util.List;
  */
 
 public class PersonDAOImpl implements PersonDAO {
+
+    private List<String> listOfPeople = new ArrayList<>();
 
     @Override
     public void addPerson(Person person) throws SQLException {
@@ -88,5 +91,13 @@ public class PersonDAOImpl implements PersonDAO {
             if (session != null && session.isOpen()) session.close();
         }
        return people;
+    }
+    @Override
+    public List<String> getListOfPeople() throws SQLException {
+        for (int i = 0; i < getAllPeople().size(); i++) {
+            String person = getAllPeople().get(i).getSecondName() + " " + getAllPeople().get(i).getFirstName() + " " + getAllPeople().get(i).getMiddleName() + " id:" + getAllPeople().get(i).getId();
+            listOfPeople.add(person);
+        }
+        return listOfPeople;
     }
 }
