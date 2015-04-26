@@ -28,7 +28,7 @@ public class Project {
         TaskDAO taskDAO = factory.getTaskDAO();
         LogDAO logDAO = factory.getLogDAO();
 
-        Person person = new Person();
+        /*Person person = new Person();
         person.setFirstName("Masha");
         person.setMiddleName("Zvezdeevna");
         person.setSecondName("Zhopko");
@@ -50,15 +50,15 @@ public class Project {
 
         log1.setTask(task1);
         tasks.add(task1);
-        //person.setTasks(tasks);
+        person.setTasks(tasks);
 
         personDAO.addPerson(person);
         taskDAO.addTask(task1);
-        logDAO.addLog(log1);
+        logDAO.addLog(log1);*/
 
-        /*List<Person> list = personDAO.getAllPeople();
+        List<Person> list = personDAO.getAllPeople();
 
-        list.forEach((Person person) -> System.out.println(person.getFirstName() + " " + person.getMiddleName() + " " + person.getSecondName() + " " + person.getLogin() + " " + person.getPassword()));
+        /*list.forEach((Person person) -> System.out.println(person.getFirstName() + " " + person.getMiddleName() + " " + person.getSecondName() + " " + person.getLogin() + " " + person.getPassword()));
 
         HibernateUtil.shutdown();*/
     }

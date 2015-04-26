@@ -21,6 +21,7 @@ import main.java.DAO.TaskDAO;
 import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
+import main.java.general.Factory;
 import main.java.view.PersonEditDialogController;
 import main.java.view.PersonOverviewController;
 import main.java.view.TaskEditDialogController;
@@ -195,6 +196,7 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
+        Factory factory = Factory.getInstance();
         launch(args);
     }
 }
