@@ -1,27 +1,25 @@
 package main.java.view;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.java.entity.Task;
+import main.java.entity.Log;
 
 import java.sql.SQLException;
 
-
 /**
- * Created by Artsiom Tratsiuk on 23.04.2015.
+ * Created by Artsiom Tratsiuk on 27.04.2015.
  */
-public class TaskEditDialogController {
+public class LogEditDialogController {
+
     @FXML
-    private TextField nameOfStatusField;
+    private TextField commentField;
     @FXML
-    private ChoiceBox statusChoiceBox;
+    private TextField timeField;
 
     private Stage dialogStage;
-    private Task task;
+    private Log log;
     private boolean okClicked = false;
 
     /**
@@ -30,7 +28,6 @@ public class TaskEditDialogController {
      */
     @FXML
     private void initialize() throws SQLException {
-        statusChoiceBox.setItems(FXCollections.observableArrayList("Выполнена", "Не выполнена"));
     }
 
     /**
@@ -45,13 +42,13 @@ public class TaskEditDialogController {
     /**
      * Sets the person to be edited in the dialog.
      *
-     * @param task
+     * @param log
      */
-    public void setTask(Task task) throws SQLException {
-        this.task = task;
+    public void setLog(Log log) throws SQLException {
+        this.log = log;
 
-        nameOfStatusField.setText(task.getName());
-        statusChoiceBox.setValue(task.getStatus());
+        commentField.setText(log.getComment());
+        timeField.setText(String.valueOf(log.getTime()));
     }
 
     /**
@@ -69,21 +66,29 @@ public class TaskEditDialogController {
     @FXML
     private void handleOk() throws SQLException {
         if (isInputValid()) {
-            task.setName(nameOfStatusField.getText());
-            if (null != statusChoiceBox.getValue()) {
-                task.setStatus(String.valueOf(statusChoiceBox.getValue()));
-            } else {
-                task.setStatus("Не выполнена");
-            }
-            /*if (null != personChoiceBox.getValue()) {
-                task.setPerson((Person) statusChoiceBox.getValue());
-            } else {
-                task.setPerson(personDAO.getPersonById(2));
-            }*/
+            log.setComment(commentField.getText());
+            isInteger(timeField.getText());
+            log.setTime(Integer.parseInt(timeField.getText()));
 
             okClicked = true;
             dialogStage.close();
         }
+    }
+
+    private boolean isInteger(String value){
+        try{
+            Integer.parseInt(value);
+        }catch(NumberFormatException exc)
+        {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Не верно указано затраченное время!");
+            alert.setHeaderText(null);
+            alert.setContentText("Введите целое число затраченного времени!");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -102,13 +107,15 @@ public class TaskEditDialogController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (nameOfStatusField.getText() == null || nameOfStatusField.getText().length() == 0) {
-            errorMessage += "Не введено название задачи!\n";
+        if (commentField.getText() == null || commentField.getText().length() == 0) {
+            errorMessage += "Не введен комментарий!\n";
         }
-
+        if (timeField.getText() == null || timeField.getText().length() == 0) {
+            errorMessage += "Не введено время выполнения задачи!\n";
+        }
         if (errorMessage.length() == 0) {
             return true;
-        }         if (errorMessage.length() == 0) {
+        } if (errorMessage.length() == 0) {
             return true;
         } else {
             // Show the error message.

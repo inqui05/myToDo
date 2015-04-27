@@ -14,7 +14,6 @@ import main.java.MainApp;
 import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
-import org.controlsfx.dialog.Dialogs;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -81,7 +80,7 @@ public class PersonOverviewController {
     private void initialize()throws SQLException{
         personTable.setPlaceholder(new Text("В данный момент в программе отсутствуют пользователи"));
         taskTable.setPlaceholder(new Text("Пользователь не выбран либо выбранному пользователю не назначены задачи!"));
-        logTable.setPlaceholder(new Text("Задача не выбрана либо к выбранной задаче нету комментариев!"));
+        logTable.setPlaceholder(new Text("Задача не выбрана либо к выбранной задаче комментарии отсутствуют!"));
 
         // Initialize the person table with the six columns
         personIdColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
@@ -94,24 +93,7 @@ public class PersonOverviewController {
         // Initialize the task table with the three columns
         taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().taskIdProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        statusColumn.setCellFactory(column -> new TableCell<Task, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-
-                    setText(item);
-                    if ("выполнена".equals(item)) {
-                        setTextFill(Color.GREEN);
-                    } else if ("не выполнена".equals(item)) {
-                        setTextFill(Color.RED);
-                    }
-                }
-            }
-        });
+        statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
         //Initialize the log table with the two columns
         commentColumn.setCellValueFactory(cellData -> cellData.getValue().commentProperty());
@@ -322,24 +304,95 @@ public class PersonOverviewController {
      */
     @FXML
     private void handleEditTask() {
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
         Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        if(null == selectedPerson || null == selectedTask) {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Пользователь или задача не выбраны!");
+            alert.setHeaderText(null);
+            alert.setContentText("Выберите пользователя и задачу которую необходимо редактировать!");
+            alert.showAndWait();
+        }
+
+
         if (selectedTask != null) {
             boolean okClicked = mainApp.showTaskEditDialog(selectedTask);
             if (okClicked) {
                 try {
                     taskDAO.updateTask(selectedTask);
+                    taskTable.setItems(mainApp.getTaskData(selectedPerson));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
 
-        } else {
+        }
+    }
+
+    //ДОБАВИТЬ ИЛИ КОРРЕКТИРОВАТЬ ЛОГ
+    /**
+     * Called when the user clicks the new button. Opens a dialog to edit
+     * details for a new log.
+     */
+    @FXML
+    private void handleNewLog() {
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        if(null == selectedPerson || null == selectedTask) {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Задача не выбрана!");
             alert.setHeaderText(null);
-            alert.setContentText("Пожалуйста, выберите задачу в таблице!");
+            alert.setContentText("Выберите пользователя и задачу, к которой необходимо добавить комментарий");
             alert.showAndWait();
+        }
+        else{
+            Log tempLog = new Log();
+            boolean okClicked = mainApp.showLogEditDialog(tempLog);
+
+            if (okClicked) {
+                try {
+                    tempLog.setTask(selectedTask);
+                    logDAO.addLog(tempLog);
+                    logTable.setItems(mainApp.getLogData(selectedTask));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     */
+    @FXML
+    private void handleEditLog() {
+        Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        Log selectedLog = logTable.getSelectionModel().getSelectedItem();
+        if(null == selectedPerson || null == selectedTask || null == selectedLog) {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Комментарий не выбран!");
+            alert.setHeaderText(null);
+            alert.setContentText("Выберите комментарий, который необходимо редактировать!");
+            alert.showAndWait();
+        }
+
+
+        if (selectedLog != null) {
+            boolean okClicked = mainApp.showLogEditDialog(selectedLog);
+            if (okClicked) {
+                try {
+                    logDAO.updateLog(selectedLog);
+                    logTable.setItems(mainApp.getLogData(selectedTask));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
     }
 }

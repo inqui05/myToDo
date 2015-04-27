@@ -21,7 +21,8 @@ import main.java.DAO.TaskDAO;
 import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
-import main.java.general.Factory;
+import main.java.util.Factory;
+import main.java.view.LogEditDialogController;
 import main.java.view.PersonEditDialogController;
 import main.java.view.PersonOverviewController;
 import main.java.view.TaskEditDialogController;
@@ -181,6 +182,48 @@ public class MainApp extends Application {
             TaskEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setTask(task);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //Задачи
+    /**
+     * Opens a dialog to edit details for the specified person. If the user
+     * clicks OK, the changes are saved into the provided person object and true
+     * is returned.
+     *
+     * @param log the person object to be edited
+     * @return true if the user clicked OK, false otherwise.
+     */
+    public boolean showLogEditDialog(Log log) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/LogEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Комментарий");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            LogEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setLog(log);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

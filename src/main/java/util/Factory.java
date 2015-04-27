@@ -1,4 +1,4 @@
-package main.java.general;
+package main.java.util;
 
 import main.java.DAO.DAOImpl.LogDAOImpl;
 import main.java.DAO.DAOImpl.PersonDAOImpl;

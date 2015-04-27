@@ -40,8 +40,4 @@ public class HibernateUtil {
         getSessionFactory().close();
     }
 
-
-    //http://forums.mysql.com/read.php?39,99321,102211#msg-102211
-    //http://www.sql.ru/forum/478201/jpa-hibernate-sozdanie-bazy-i-tablic
-
 }
