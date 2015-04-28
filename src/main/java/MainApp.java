@@ -247,9 +247,9 @@ public class MainApp extends Application {
             conn = DriverManager.getConnection(NewDB.getDB_URL(), NewDB.getUSER(), NewDB.getPASS());
             stmt = conn.createStatement();
 
-            String nameOfDB = "MYTODO2015";
+            String nameOfDB = "mytodo2015";
 
-        if(NewDB.checkDBExists(nameOfDB)){
+        if(!NewDB.checkDBExists(nameOfDB)){
             stmt.executeUpdate("CREATE DATABASE MYTODO2015 CHARACTER SET UTF8");
         }
 

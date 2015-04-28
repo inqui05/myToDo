@@ -80,7 +80,7 @@ public class LogEditDialogController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Не верно указано затраченное время!");
             alert.setHeaderText(null);
-            alert.setContentText("Введите целое число затраченного времени!");
+            alert.setContentText("Введите целое число затраченного времени!\nЗатраченное время не может превышать 2147483647 (245000 лет)!");
             alert.showAndWait();
             return false;
         }
