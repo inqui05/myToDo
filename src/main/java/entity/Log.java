@@ -6,26 +6,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * Created by Artsiom Tratsiuk on 31.03.2015.
+ * Created by Artsiom Tratsiuk
  */
 
-//@Entity
-//@Table(name = "log")
 public class Log {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "log_id", unique = true, nullable = false)
     private IntegerProperty id;
 
-    //@Column(name = "elapsed_time", nullable = true)
     private IntegerProperty time;
 
-    //@Column(length = 1000, nullable = false)
     private StringProperty comment;
 
-    //@ManyToOne(fetch=FetchType.EAGER)
-    //@JoinColumn(name = "task_id")
     private Task task;
 
     public Log() {

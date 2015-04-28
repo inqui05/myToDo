@@ -1,6 +1,7 @@
 package main.java;
+
 /**
- * Created by Artsiom Tratsiuk on 08.04.2015.
+ * Created by Artsiom Tratsiuk
  */
 
 import javafx.application.Application;
@@ -22,14 +23,14 @@ import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
 import main.java.util.Factory;
+import main.java.util.NewDB;
 import main.java.view.LogEditDialogController;
 import main.java.view.PersonEditDialogController;
 import main.java.view.PersonOverviewController;
 import main.java.view.TaskEditDialogController;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.*;
 
 public class MainApp extends Application {
 
@@ -100,30 +101,29 @@ public class MainApp extends Application {
     TaskDAO taskDAO = new TaskDaoImpl();
     LogDAO logDAO = new LogDAOImpl();
 
-    // ТУТ СЧИТЫВАЕМ СПИСКИ ИЗ БД
+    /*
+    *Read lists of People/Tasks/Logs from the DB
+    */
     public ObservableList<Person> getPersonData() throws SQLException {
         if(!personData.isEmpty())personData.clear();
-        personData = FXCollections.observableList((List<Person>) personDAO.getAllPeople());
+        personData = FXCollections.observableList(personDAO.getAllPeople());
         return personData;
     }
     public ObservableList<Task> getTaskData(Person person) throws SQLException {
         if(!taskData.isEmpty())taskData.clear();
-        taskData = FXCollections.observableList((List<Task>) taskDAO.getTasksByPerson(person));
+        taskData = FXCollections.observableList(taskDAO.getTasksByPerson(person));
         return taskData;
     }
     public ObservableList<Log> getLogData(Task task) throws SQLException {
         if(!logData.isEmpty()) logData.clear();
-        logData =  FXCollections.observableList((List<Log>) logDAO.getLogByTask(task));
+        logData =  FXCollections.observableList(logDAO.getLogByTask(task));
         return logData;
     }
-
+                    //Person
     /**
      * Opens a dialog to edit details for the specified person. If the user
      * clicks OK, the changes are saved into the provided person object and true
      * is returned.
-     *
-     * @param person the person object to be edited
-     * @return true if the user clicked OK, false otherwise.
      */
     public boolean showPersonEditDialog(Person person) {
         try {
@@ -154,14 +154,11 @@ public class MainApp extends Application {
             return false;
         }
     }
-        //КОММЕНТЫ
+                     //Task
     /**
-     * Opens a dialog to edit details for the specified person. If the user
+     * Opens a dialog to edit details for the task. If the user
      * clicks OK, the changes are saved into the provided person object and true
      * is returned.
-     *
-     * @param task the task object to be edited
-     * @return true if the user clicked OK, false otherwise.
      */
     public boolean showTaskEditDialog(Task task) {
         try {
@@ -178,7 +175,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the person into the controller.
+            // Set the task into the controller.
             TaskEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setTask(task);
@@ -196,14 +193,11 @@ public class MainApp extends Application {
         }
     }
 
-    //Задачи
+                     //Log
     /**
-     * Opens a dialog to edit details for the specified person. If the user
+     * Opens a dialog to edit details for the log. If the user
      * clicks OK, the changes are saved into the provided person object and true
      * is returned.
-     *
-     * @param log the person object to be edited
-     * @return true if the user clicked OK, false otherwise.
      */
     public boolean showLogEditDialog(Log log) {
         try {
@@ -220,7 +214,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the person into the controller.
+            // Set the log into the controller.
             LogEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setLog(log);
@@ -239,7 +233,46 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
+        /*
+        *Check and create DB if it doesn't exist
+         */
+        Connection conn = null;
+        Statement stmt = null;
+
+        try{
+            //Register JDBC driver
+            Class.forName(NewDB.getJDBC_DRIVER());
+
+            //Open a connection and execute a query
+            conn = DriverManager.getConnection(NewDB.getDB_URL(), NewDB.getUSER(), NewDB.getPASS());
+            stmt = conn.createStatement();
+
+            String nameOfDB = "MYTODO2015";
+
+        if(NewDB.checkDBExists(nameOfDB)){
+            stmt.executeUpdate("CREATE DATABASE MYTODO2015 CHARACTER SET UTF8");
+        }
+
+        }catch(SQLException se){
+            se.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally{
+            try{
+                if(stmt!=null)
+                    stmt.close();
+            }catch(SQLException se2){/*NOP*/
+            }
+            try{
+                if(conn!=null)
+                    conn.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }
+        }
+
         Factory factory = Factory.getInstance();
         launch(args);
+
     }
 }

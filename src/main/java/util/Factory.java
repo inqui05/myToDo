@@ -8,7 +8,7 @@ import main.java.DAO.PersonDAO;
 import main.java.DAO.TaskDAO;
 
 /**
- * Created by Artsiom Tratsiuk on 01.04.2015.
+ * Created by Artsiom Tratsiuk
  */
 
 public class Factory {

@@ -9,7 +9,7 @@ import main.java.entity.Log;
 import java.sql.SQLException;
 
 /**
- * Created by Artsiom Tratsiuk on 27.04.2015.
+ * Created by Artsiom Tratsiuk
  */
 public class LogEditDialogController {
 
@@ -32,17 +32,13 @@ public class LogEditDialogController {
 
     /**
      * Sets the stage of this dialog.
-     *
-     * @param dialogStage
      */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
     /**
-     * Sets the person to be edited in the dialog.
-     *
-     * @param log
+     * Sets the log to be edited in the dialog.
      */
     public void setLog(Log log) throws SQLException {
         this.log = log;
@@ -53,8 +49,6 @@ public class LogEditDialogController {
 
     /**
      * Returns true if the user clicked OK, false otherwise.
-     *
-     * @return
      */
     public boolean isOkClicked() {
         return okClicked;
@@ -74,7 +68,9 @@ public class LogEditDialogController {
             dialogStage.close();
         }
     }
-
+    /**
+     * Checked number when the user clicks ok.
+     */
     private boolean isInteger(String value){
         try{
             Integer.parseInt(value);
@@ -101,8 +97,6 @@ public class LogEditDialogController {
 
     /**
      * Validates the user input in the text fields.
-     *
-     * @return true if the input is valid
      */
     private boolean isInputValid() {
         String errorMessage = "";

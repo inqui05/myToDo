@@ -2,14 +2,12 @@ package main.java.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 import java.io.File;
 
 /**
- * Created by Artsiom Tratsiuk on 31.03.2015.
+ * Created by Artsiom Tratsiuk
  */
 
 public class HibernateUtil {

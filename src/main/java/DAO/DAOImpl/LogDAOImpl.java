@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by Artsiom Tratsiuk on 31.03.2015.
+ * Created by Artsiom Tratsiuk
  */
 
 public class LogDAOImpl implements LogDAO{

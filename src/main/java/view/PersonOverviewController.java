@@ -2,7 +2,6 @@ package main.java.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.DAO.DAOImpl.LogDAOImpl;
 import main.java.DAO.DAOImpl.PersonDAOImpl;
@@ -20,7 +19,7 @@ import java.util.List;
 
 
 /**
- * Created by Artsiom Tratsiuk on 08.04.2015.
+ * Created by Artsiom Tratsiuk
  */
 public class PersonOverviewController {
 
@@ -106,6 +105,7 @@ public class PersonOverviewController {
                 System.err.println("esql");
             }});
 
+        // Listen for selection changes and show the task details when changed.
         taskTable.getSelectionModel().selectedItemProperty().addListener(
             (observable, oldValue, newValue) -> { try{showLogs(newValue);}catch (SQLException esql){
                 System.err.println("esql");
@@ -114,8 +114,6 @@ public class PersonOverviewController {
 
     /**
      * Is called by the main application to give a reference back to itself.
-     *
-     * @param mainApp
      */
     public void setMainApp(MainApp mainApp) throws SQLException {
         this.mainApp = mainApp;
@@ -126,8 +124,6 @@ public class PersonOverviewController {
 
     /**
      * Fills all text fields to show details about tasks
-     *
-     *  person the person or null
      */
 
     private void showTasks(Person person) throws SQLException {
@@ -139,6 +135,9 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Fills all text fields to show details about logs
+     */
     private void showLogs(Task task) throws SQLException {
         if(task != null){
             logTable.setItems(mainApp.getLogData(task));
@@ -148,29 +147,29 @@ public class PersonOverviewController {
         }
     }
 
+    /*
+    *Delete the selected log when the user push "Удалить"
+    */
     @FXML
     private void handleDeleteLog() throws SQLException{
         int selectedIndex = logTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            //ГОТОВО, НАДО ПРОТЕСТИРОВАТЬ
             logDAO.deleteLog(logTable.getItems().get(selectedIndex));
             logTable.getItems().remove(selectedIndex);
         } else {
-            // if i will select nothing
+            // if i selected nothing
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Заметка не выбрана!");
             alert.setHeaderText(null);
             alert.setContentText("Пожалуйста, выберите заметку в таблице!");
 
-            /*Добавить если сделаю css или удалить
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(Dialogs.class.getResource("DarkTheme.css").toExternalForm());*/
-
             alert.showAndWait();
         }
     }
 
-    //удалять вместе с задачей и все логи
+    /*
+    *Delete the selected task and its logs when the user push "Удалить"
+    */
     @FXML
     private void handleDeleteTask() throws SQLException {
         int selectedIndex = taskTable.getSelectionModel().getSelectedIndex();
@@ -184,21 +183,19 @@ public class PersonOverviewController {
             taskDAO.deleteTask(taskTable.getItems().get(selectedIndex));
             taskTable.getItems().remove(selectedIndex);
         } else {
-            // if i will select nothing
+            // if i selected nothing
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Задача не выбрана!");
             alert.setHeaderText(null);
             alert.setContentText("Пожалуйста, выберите задачу в таблице!");
 
-            /*Добавить если сделаю css или удалить
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(Dialogs.class.getResource("DarkTheme.css").toExternalForm());*/
-
             alert.showAndWait();
         }
     }
 
-    //при удалении человека удалять все его задачи и логи
+    /*
+    *Delete the selected person and his tasks and logs when the user push "Удалить"
+    */
     @FXML
     private void handleDeletePerson() throws SQLException {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
@@ -214,23 +211,19 @@ public class PersonOverviewController {
             personDAO.deletePerson(personTable.getItems().get(selectedIndex));
             personTable.getItems().remove(selectedIndex);
         } else {
-            // if i will select nothing
+            // if i selected nothing
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Пользователь не выбран!");
             alert.setHeaderText(null);
             alert.setContentText("Пожалуйста, выберите пользователя в таблице!");
 
-            /*Добавить если сделаю css или удалить
-            DialogPane dialogPane = alert.getDialogPane();
-            dialogPane.getStylesheets().add(Dialogs.class.getResource("DarkTheme.css").toExternalForm());*/
-
             alert.showAndWait();
         }
     }
 
-    //ДОБАВИТЬ ИЛИ КОРРЕКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯ
+                        //PERSON
     /**
-     * Called when the user clicks the new button. Opens a dialog to edit
+     * Called when the user clicks the button "Добавить". Opens a dialog to edit
      * details for a new person.
      */
     @FXML
@@ -244,7 +237,7 @@ public class PersonOverviewController {
     }
 
     /**
-     * Called when the user clicks the edit button. Opens a dialog to edit
+     * Called when the user clicks the button "Изменить". Opens a dialog to edit
      * details for the selected person.
      */
     @FXML
@@ -265,11 +258,10 @@ public class PersonOverviewController {
         }
     }
 
-    //ДОБАВИТЬ ИЛИ КОРРЕКТИРОВАТЬ ЗАДАЧУ
-
+                        //TASK
     /**
-     * Called when the user clicks the new button. Opens a dialog to edit
-     * details for a new person.
+     * Called when the user clicks the button "Добавить". Opens a dialog to edit
+     * details for a new task.
      */
     @FXML
     private void handleNewTask() {
@@ -299,7 +291,7 @@ public class PersonOverviewController {
     }
 
     /**
-     * Called when the user clicks the edit button. Opens a dialog to edit
+     * Called when the user clicks the button "Изменить". Opens a dialog to edit
      * details for the selected task.
      */
     @FXML
@@ -330,9 +322,9 @@ public class PersonOverviewController {
         }
     }
 
-    //ДОБАВИТЬ ИЛИ КОРРЕКТИРОВАТЬ ЛОГ
+                        //LOG
     /**
-     * Called when the user clicks the new button. Opens a dialog to edit
+     * Called when the user clicks the button "Добавить". Opens a dialog to edit
      * details for a new log.
      */
     @FXML
@@ -364,8 +356,8 @@ public class PersonOverviewController {
     }
 
     /**
-     * Called when the user clicks the edit button. Opens a dialog to edit
-     * details for the selected person.
+     * Called when the user clicks the button "Изменить". Opens a dialog to edit
+     * details for the selected log.
      */
     @FXML
     private void handleEditLog() {
@@ -380,8 +372,6 @@ public class PersonOverviewController {
             alert.setContentText("Выберите комментарий, который необходимо редактировать!");
             alert.showAndWait();
         }
-
-
         if (selectedLog != null) {
             boolean okClicked = mainApp.showLogEditDialog(selectedLog);
             if (okClicked) {

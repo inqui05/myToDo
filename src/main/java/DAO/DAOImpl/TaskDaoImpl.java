@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by Artsiom Tratsiuk on 31.03.2015.
+ * Created by Artsiom Tratsiuk
  */
 
 public class TaskDaoImpl implements TaskDAO{
@@ -70,21 +70,6 @@ public class TaskDaoImpl implements TaskDAO{
             String hqlSelect = "FROM Task WHERE PERSON_ID = :id";
             tasks = session.createQuery(hqlSelect).setParameter("id", person.getId()).list();
             session.getTransaction().commit();
-        }catch(Exception e){
-            e.printStackTrace();
-        }finally {
-            if (session != null && session.isOpen()) session.close();
-        }
-        return tasks;
-    }
-
-    @Override
-    public List<Task> getAllTask() throws SQLException {
-        List<Task> tasks = null;
-        Session session = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            tasks = session.createCriteria(Task.class).list();
         }catch(Exception e){
             e.printStackTrace();
         }finally {

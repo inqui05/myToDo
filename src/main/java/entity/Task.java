@@ -6,29 +6,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Artsiom Tratsiuk on 31.03.2015.
+ * Created by Artsiom Tratsiuk
  */
 
-//@Entity
-//@Table(name = "task")
 public class Task {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "task_id", unique = true, nullable = false)
     private IntegerProperty id;
 
-    //@Column(length = 1000, nullable = false)
     private StringProperty name;
 
-    //@Column
     private StringProperty status;
 
-    //@ManyToOne(fetch=FetchType.EAGER)
-    //@JoinColumn(name = "person_id")
     private Person person;
 
-    //@OneToMany(fetch=FetchType.EAGER, mappedBy = "task")
     private Set<Log> logs = new HashSet<Log>();
 
     public Task() {

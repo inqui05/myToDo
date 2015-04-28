@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import main.java.entity.Person;
 
 /**
- * Created by Artsiom Tratsiuk on 10.04.2015.
+ * Created by Artsiom Tratsiuk
  */
 public class PersonEditDialogController {
     @FXML
@@ -35,8 +35,6 @@ public class PersonEditDialogController {
 
     /**
      * Sets the stage of this dialog.
-     *
-     * @param dialogStage
      */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
@@ -44,8 +42,6 @@ public class PersonEditDialogController {
 
     /**
      * Sets the person to be edited in the dialog.
-     *
-     * @param person
      */
     public void setPerson(Person person) {
         this.person = person;
@@ -59,8 +55,6 @@ public class PersonEditDialogController {
 
     /**
      * Returns true if the user clicked OK, false otherwise.
-     *
-     * @return
      */
     public boolean isOkClicked() {
         return okClicked;
@@ -93,8 +87,6 @@ public class PersonEditDialogController {
 
     /**
      * Validates the user input in the text fields.
-     *
-     * @return true if the input is valid
      */
     private boolean isInputValid() {
         String errorMessage = "";

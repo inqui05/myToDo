@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 
 /**
- * Created by Artsiom Tratsiuk on 23.04.2015.
+ * Created by Artsiom Tratsiuk
  */
 public class TaskEditDialogController {
     @FXML
@@ -35,17 +35,14 @@ public class TaskEditDialogController {
 
     /**
      * Sets the stage of this dialog.
-     *
-     * @param dialogStage
+
      */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
     /**
-     * Sets the person to be edited in the dialog.
-     *
-     * @param task
+     * Sets the task to be edited in the dialog.
      */
     public void setTask(Task task) throws SQLException {
         this.task = task;
@@ -56,8 +53,6 @@ public class TaskEditDialogController {
 
     /**
      * Returns true if the user clicked OK, false otherwise.
-     *
-     * @return
      */
     public boolean isOkClicked() {
         return okClicked;
@@ -75,11 +70,6 @@ public class TaskEditDialogController {
             } else {
                 task.setStatus("Не выполнена");
             }
-            /*if (null != personChoiceBox.getValue()) {
-                task.setPerson((Person) statusChoiceBox.getValue());
-            } else {
-                task.setPerson(personDAO.getPersonById(2));
-            }*/
 
             okClicked = true;
             dialogStage.close();
@@ -96,8 +86,6 @@ public class TaskEditDialogController {
 
     /**
      * Validates the user input in the text fields.
-     *
-     * @return true if the input is valid
      */
     private boolean isInputValid() {
         String errorMessage = "";

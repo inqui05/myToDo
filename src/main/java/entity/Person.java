@@ -1,7 +1,5 @@
 package main.java.entity;
 
-
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,34 +9,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Artsiom Tratsiuk on 31.03.2015.
+ * Created by Artsiom Tratsiuk
  */
 
-//@Entity
-//@Table(name = "person")
 public class Person {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "person_id")
     private IntegerProperty id;
 
-    //@Column(name = "first_name")
     private StringProperty firstName;
 
-    //@Column(name = "middle_name")
     private StringProperty middleName;
 
-    //@Column(name = "second_name")
     private StringProperty secondName;
 
-    //@Column
     private StringProperty login;
 
-    //@Column
     private StringProperty password;
 
-    //@OneToMany(fetch=FetchType.LAZY, mappedBy = "person")
     private Set<Task> tasks = new HashSet<Task>() {
     };
 
