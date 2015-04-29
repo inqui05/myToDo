@@ -68,6 +68,7 @@ public class LogEditDialogController {
             dialogStage.close();
         }
     }
+
     /**
      * Checked number when the user clicks ok.
      */

@@ -248,9 +248,9 @@ public class MainApp extends Application {
             stmt = conn.createStatement();
 
             String nameOfDB = "mytodo2015";
-
+                                                        //разобраться с методом checkDBExists(), точнее убрать за ненадобностью!
         if(!NewDB.checkDBExists(nameOfDB)){
-            stmt.executeUpdate("CREATE DATABASE MYTODO2015 CHARACTER SET UTF8");
+            stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS mytodo2015 CHARACTER SET UTF8");
         }
 
         }catch(SQLException se){

@@ -14,7 +14,7 @@ public class NewDB{
 
     //  Database credentials
     private static final String USER = "root";
-    private static final String PASS = "root";
+    private static final String PASS = "";
 
     public static boolean checkDBExists(String dbName){
 

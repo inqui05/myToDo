@@ -18,7 +18,7 @@ public class TaskEditDialogController {
     @FXML
     private TextField nameOfStatusField;
     @FXML
-    private ChoiceBox statusChoiceBox;
+    private ChoiceBox<String> statusChoiceBox;
 
     private Stage dialogStage;
     private Task task;
