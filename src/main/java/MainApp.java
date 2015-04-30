@@ -23,7 +23,7 @@ import main.java.entity.Log;
 import main.java.entity.Person;
 import main.java.entity.Task;
 import main.java.util.Factory;
-import main.java.util.NewDB;
+import main.java.util.HibernateUtil;
 import main.java.view.LogEditDialogController;
 import main.java.view.PersonEditDialogController;
 import main.java.view.PersonOverviewController;
@@ -232,6 +232,16 @@ public class MainApp extends Application {
         }
     }
 
+    public class NewBD{
+        // JDBC driver name and database URL
+        private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        private static final String DB_URL = "jdbc:mysql://localhost/";
+
+        //  Database credentials
+        private static final String USER = "root";
+        private static final String PASS = "root";
+    }
+
     public static void main(String[] args) {
         /*
         *Check and create DB if it doesn't exist
@@ -241,27 +251,25 @@ public class MainApp extends Application {
 
         try{
             //Register JDBC driver
-            Class.forName(NewDB.getJDBC_DRIVER());
+            Class.forName(NewBD.JDBC_DRIVER);
 
             //Open a connection and execute a query
-            conn = DriverManager.getConnection(NewDB.getDB_URL(), NewDB.getUSER(), NewDB.getPASS());
+            conn = DriverManager.getConnection(NewBD.DB_URL, NewBD.USER, NewBD.PASS);
             stmt = conn.createStatement();
 
-            String nameOfDB = "mytodo2015";
-                                                        //разобраться с методом checkDBExists(), точнее убрать за ненадобностью!
-        if(!NewDB.checkDBExists(nameOfDB)){
             stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS mytodo2015 CHARACTER SET UTF8");
-        }
 
-        }catch(SQLException se){
-            se.printStackTrace();
+
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally{
             try{
                 if(stmt!=null)
                     stmt.close();
-            }catch(SQLException se2){/*NOP*/
+            }catch(SQLException se2){
+                se2.printStackTrace();
             }
             try{
                 if(conn!=null)
